@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.IO;
+using ESCPOS.NET.Printable;
 
 namespace ESCPOS.NET
 {
@@ -17,32 +19,28 @@ namespace ESCPOS.NET
 
         public void Cut(int lines = 3)
         {
-            throw new NotImplementedException();
+            _connector.Write(_encodeUTF8(Control.GROUP_SEPARATOR + "V" + Char.ConvertFromUtf32(65) + Char.ConvertFromUtf32(lines)));
+        }
+
+        public void Feed()
+        {
+            _connector.Write(_encodeUTF8(Control.LINE_FEED));
+        }
+
+        public void Print(IPrintable printable)
+        {
+            _connector.Write(printable.GetBytes());
         }
 
         public void Print(string content)
         {
-            _connector.Write(Encoding.UTF8.GetBytes(content));
+            _connector.Write(_encodeUTF8(content));
+            Feed();
         }
 
-        public void PrintBarCode(string content)
+        private byte[] _encodeUTF8(string content)
         {
-            throw new NotImplementedException();
-        }
-
-        public void PrintImage(Bitmap image)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PrintImage(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PrintLine(string content)
-        {
-            throw new NotImplementedException();
+            return Encoding.UTF8.GetBytes(content);
         }
     }
 }

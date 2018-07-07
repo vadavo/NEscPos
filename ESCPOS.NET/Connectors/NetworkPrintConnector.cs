@@ -31,7 +31,7 @@ namespace ESCPOS.NET.Connectors
 
         private void _openSocket()
         {
-            _socket = new Socket(_endPoint.AddressFamily, SocketType.Stream, ProtocolType.IPv4);
+            _socket = new Socket(_endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _socket.Connect(_endPoint);
         }
 
