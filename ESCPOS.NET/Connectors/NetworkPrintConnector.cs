@@ -40,6 +40,11 @@ namespace ESCPOS.NET.Connectors
             _socket.Close();
         }
 
+        public void Dispose()
+        {
+            _socket.Dispose();
+        }
+
         public byte[] Read()
         {
             byte[] buffer = null;

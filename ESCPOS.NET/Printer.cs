@@ -4,43 +4,41 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.IO;
+using System.Resources;
 using ESCPOS.NET.Printable;
 
 namespace ESCPOS.NET
 {
-    public class Printer : IPrinter
+    public class Printer : IPrinter, IDisposable
     {
-        private IPrintConnector _connector;
+        private readonly IPrintConnector _connector;
 
         public Printer(IPrintConnector connector)
         {
             _connector = connector;
+            Reset();
         }
 
-        public void Cut(int lines = 3)
-        {
-            _connector.Write(_encodeUTF8(Control.GROUP_SEPARATOR + "V" + Char.ConvertFromUtf32(65) + Char.ConvertFromUtf32(lines)));
-        }
+        ~Printer() => Dispose();
 
-        public void Feed()
-        {
-            _connector.Write(_encodeUTF8(Control.LINE_FEED));
-        }
+        public void Cut(CutType type = CutType.Full) => Print(new Cut(type));
 
-        public void Print(IPrintable printable)
-        {
-            _connector.Write(printable.GetBytes());
-        }
+        public void Feed() => Print(new Feed());
+
+        public void Reset() => Print(new Reset());
+
+        public void Print(IPrintable printable) => _connector.Write(printable.GetBytes());
 
         public void Print(string content)
         {
-            _connector.Write(_encodeUTF8(content));
+            _connector.Write(Encoding.UTF8.GetBytes(content));
             Feed();
         }
 
-        private byte[] _encodeUTF8(string content)
+        public void Dispose()
         {
-            return Encoding.UTF8.GetBytes(content);
+            Reset();
+            _connector.Dispose();
         }
     }
 }

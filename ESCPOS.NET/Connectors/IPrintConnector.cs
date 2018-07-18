@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ESCPOS.NET.Connectors
 {
-    public interface IPrintConnector
+    public interface IPrintConnector : IDisposable
     {
         /// <summary>
         /// Write data to the printer.
