@@ -9,7 +9,7 @@ using ESCPOS.NET.Printable;
 
 namespace ESCPOS.NET
 {
-    public class Printer : IPrinter, IDisposable
+    public class Printer : IPrinter
     {
         private readonly IPrintConnector _connector;
 
@@ -18,8 +18,6 @@ namespace ESCPOS.NET
             _connector = connector;
             Reset();
         }
-
-        ~Printer() => Dispose();
 
         public void Cut(CutType type = CutType.Full) => Print(new Cut(type));
 
@@ -33,12 +31,6 @@ namespace ESCPOS.NET
         {
             _connector.Write(Encoding.UTF8.GetBytes(content));
             Feed();
-        }
-
-        public void Dispose()
-        {
-            Reset();
-            _connector.Dispose();
         }
     }
 }
