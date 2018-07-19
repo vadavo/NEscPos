@@ -39,7 +39,7 @@ namespace ESCPOS.NET.Printable
 
             foreach (var mode in _mode)
             {
-                bytes.AddRange(new[] { (byte)Control.Escape, (byte)'!' });
+                bytes.AddRange(new[] { (byte) Control.Escape, (byte) '!' });
                 bytes.Add((byte) mode);
             }
 
