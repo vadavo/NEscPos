@@ -9,7 +9,7 @@ using ESCPOS.NET.Printable;
 
 namespace ESCPOS.NET
 {
-    public class Printer : IPrinter
+    public class Printer : IPrinter, IDisposable
     {
         private readonly IPrintConnector _connector;
 
@@ -31,6 +31,11 @@ namespace ESCPOS.NET
         {
             _connector.Write(Encoding.UTF8.GetBytes(content));
             Feed();
+        }
+
+        public void Dispose()
+        {
+            _connector?.Dispose();
         }
     }
 }

@@ -13,18 +13,16 @@ namespace Usage
             IPrinter printer = new Printer(connector);
 
             printer.Reset();
-            printer.Print(new Bytes(new byte[]
-            {
-                0x1C, 0x71, 0x1, 0x75, 0, 0x44
-            }));
+
+            var image = new Image();
+
+            printer.Print(image);
             printer.Feed();
             printer.Feed();
-            
             printer.Cut();
             printer.Reset();
 
             Console.ReadKey();
-           
         }
     }
 }

@@ -37,12 +37,12 @@ namespace ESCPOS.NET.Connectors
 
         ~NetworkPrintConnector()
         {
-            _socket.Close();
+            _socket?.Close();
         }
 
         public void Dispose()
         {
-            _socket.Dispose();
+            _socket?.Dispose();
         }
 
         public byte[] Read()

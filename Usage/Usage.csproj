@@ -10,4 +10,13 @@
     <ProjectReference Include="..\ESCPOS.NET\ESCPOS.NET.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="logo.pbm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="binary.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
