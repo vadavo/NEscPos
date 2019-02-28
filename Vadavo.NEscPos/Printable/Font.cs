@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 
-namespace ESCPOS.NET.Printable
+namespace Vadavo.NEscPos.Printable
 {
     public enum FontMode
     {

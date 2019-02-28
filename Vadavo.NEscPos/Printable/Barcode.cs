@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 
-namespace ESCPOS.NET.Printable
+namespace Vadavo.NEscPos.Printable
 {
     public enum BarcodeType
     {

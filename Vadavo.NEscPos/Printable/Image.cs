@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Linq;
+﻿using System.IO;
 
-namespace ESCPOS.NET.Printable
+namespace Vadavo.NEscPos.Printable
 {
     public class Image : IPrintable
     {

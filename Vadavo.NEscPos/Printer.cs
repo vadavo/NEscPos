@@ -1,19 +1,14 @@
-﻿using ESCPOS.NET.Connectors;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.IO;
-using System.Resources;
-using ESCPOS.NET.Printable;
+﻿using System.Text;
+using Vadavo.NEscPos.Connectors;
+using Vadavo.NEscPos.Printable;
 
-namespace ESCPOS.NET
+namespace Vadavo.NEscPos
 {
-    public class Printer : IPrinter, IDisposable
+    public class Printer : IPrinter
     {
-        private readonly IPrintConnector _connector;
+        private readonly IPrinterConnector _connector;
 
-        public Printer(IPrintConnector connector)
+        public Printer(IPrinterConnector connector)
         {
             _connector = connector;
             Reset();

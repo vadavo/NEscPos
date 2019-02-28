@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace ESCPOS.NET.Printable
+namespace Vadavo.NEscPos.Printable
 {
     public enum CutType
     {

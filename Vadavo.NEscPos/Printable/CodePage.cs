@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESCPOS.NET.Printable
+﻿namespace Vadavo.NEscPos.Printable
 {
     public enum CodePageType
     {

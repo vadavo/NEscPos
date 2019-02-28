@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESCPOS.NET
+﻿namespace Vadavo.NEscPos
 {
     public enum Control
     {

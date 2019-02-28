@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 
-namespace ESCPOS.NET.Connectors
+namespace Vadavo.NEscPos.Connectors
 {
-    public class NetworkPrintConnector : IPrintConnector
+    public class NetworkPrinterConnector : IPrinterConnector
     {
-        private IPEndPoint _endPoint;
+        private readonly IPEndPoint _endPoint;
         private Socket _socket;
 
-        public NetworkPrintConnector(IPEndPoint endPoint)
+        public NetworkPrinterConnector(IPEndPoint endPoint)
         {
             _endPoint = endPoint;
             _openSocket();
         }
 
-        public NetworkPrintConnector(IPAddress ipAddress, int port)
+        public NetworkPrinterConnector(IPAddress ipAddress, int port)
         {
             _endPoint = new IPEndPoint(ipAddress, port);
             _openSocket();
         }
 
-        public NetworkPrintConnector(string ipAddress, int port)
+        public NetworkPrinterConnector(string ipAddress, int port)
         {
             _endPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
             _openSocket();
@@ -33,11 +30,6 @@ namespace ESCPOS.NET.Connectors
         {
             _socket = new Socket(_endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _socket.Connect(_endPoint);
-        }
-
-        ~NetworkPrintConnector()
-        {
-            _socket?.Close();
         }
 
         public void Dispose()
