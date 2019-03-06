@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Vadavo.NEscPos.Connectors;
 using Vadavo.NEscPos.Printable;
 
@@ -30,7 +31,18 @@ namespace Vadavo.NEscPos
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+                Reset();
+            
             _connector?.Dispose();
         }
+
+        ~Printer() => Dispose(false);
     }
 }
