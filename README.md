@@ -12,7 +12,7 @@ All connectors implements the `Vadavo.NEscPos.Connectors.IPrinterConnector` inte
 
 ## Usage
 
-The usage of NEscPos is very simple, first create a connector, then create the printer attaching the connector with the printer:
+The usage of NEscPos is very simple, first create a connector, then create the printer attaching the connector into the printer:
 
 ```
 using (var connector = new Vadavo.NEscPos.Connectors.NetworkConnector("10.0.0.50", 9100))
