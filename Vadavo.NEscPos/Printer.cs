@@ -23,11 +23,7 @@ namespace Vadavo.NEscPos
 
         public void Print(IPrintable printable) => _connector.Write(printable.GetBytes());
 
-        public void Print(string content)
-        {
-            _connector.Write(Encoding.UTF8.GetBytes(content));
-            Feed();
-        }
+        public void Print(string content) => _connector.Write(new TextLine(content).GetBytes());
 
         public void Dispose()
         {
