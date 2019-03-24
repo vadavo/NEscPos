@@ -21,13 +21,16 @@ namespace Vadavo.NEscPos.Printable
             _type = type;
         }
 
-        public byte[] GetBytes() =>
-            new Reset().GetBytes() // Reset
+        public byte[] GetBytes()
+        {
+            return new Reset().GetBytes() // Reset
                 .Concat(new Justification(JustificationType.Center).GetBytes()) // Center
-                .Concat(new[] { (byte)Control.GroupSeparator, (byte)'h', (byte)_height }) // Set barcode height
-                .Concat(new[] { (byte)Control.GroupSeparator, (byte)'k', (byte)_type } // Set barcode type
-                .Concat(Encoding.UTF8.GetBytes(_content)).Concat(new[] { (byte) 0, (byte) _content.Length, (byte) 0 })) // Set barcode content.
+                .Concat(new[] {(byte) Control.GroupSeparator, (byte) 'h', (byte) _height}) // Set barcode height
+                .Concat(new[] {(byte) Control.GroupSeparator, (byte) 'k', (byte) _type} // Set barcode type
+                    .Concat(Encoding.UTF8.GetBytes(_content))
+                    .Concat(new[] {(byte) 0, (byte) _content.Length, (byte) 0})) // Set barcode content.
                 .Concat(new Reset().GetBytes()) // Reset
                 .ToArray();
+        }
     }
 }

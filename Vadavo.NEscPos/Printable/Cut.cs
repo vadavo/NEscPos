@@ -17,7 +17,12 @@ namespace Vadavo.NEscPos.Printable
             _type = type;
         }
 
-        public byte[] GetBytes() => new[] {(byte) Control.GroupSeparator, (byte) 'V', (byte) _type}
-            .Concat(new Feed().GetBytes()).Concat(new Reset().GetBytes()).ToArray();
+        public byte[] GetBytes()
+        {
+            return new[] {(byte) Control.GroupSeparator, (byte) 'V', (byte) _type}
+                .Concat(new Feed().GetBytes())
+                .Concat(new Reset().GetBytes())
+                .ToArray();
+        }
     }
 }
