@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using Vadavo.NEscPos.Connectors;
 
@@ -13,7 +14,26 @@ namespace Vadavo.NEscPos.Test
 
             using (var printer = _printMenu())
             {
-                printer.Print("Hello!");
+                printer.Print("===Start fake ticket===");
+                printer.Feed();
+                printer.Feed();
+                
+                var ticket = new Ticket("Tech store!", "X123456789", new []
+                {
+                    new Product("SmartPhone", 2, 120.95m),
+                    new Product("Smart TV", 1, 250.95m),
+                    new Product("Computer game", 2, 19.95m),
+                    new Product("Graphic card", 1, 650.49m),
+                    new Product("SIM Card", 5, 14.99m),
+                });
+                
+                printer.Print(ticket);
+                
+                printer.Reset();
+                printer.Feed();
+                printer.Feed();
+                printer.Print("===End fake ticket===");
+                
                 printer.Cut();
             }
         }
@@ -68,7 +88,29 @@ namespace Vadavo.NEscPos.Test
 
         private static IPrinterConnector _printSerialMenu()
         {
-            throw new NotImplementedException();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("Port name: ");
+            Console.ResetColor();
+            var portName = Console.ReadLine();
+
+            var baudRate = 0;
+            var baudRateIsValid = false;
+            while (!baudRateIsValid)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("Baud rate: ");
+                Console.ResetColor();
+                baudRateIsValid = int.TryParse(Console.ReadLine(), out baudRate);
+
+                if (!baudRateIsValid)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Baud rate must be an integer number, try again.");
+                    Console.ResetColor();
+                }
+            }
+
+            return new SerialPortConnector(portName, baudRate);
         }
 
         private static IPrinterConnector _printNetworkMenu()
