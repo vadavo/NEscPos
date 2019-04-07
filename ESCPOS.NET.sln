@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vadavo.NEscPos", "Vadavo.NEscPos\Vadavo.NEscPos.csproj", "{C079FBC0-30BF-4258-8054-166EC356F20A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vadavo.NEscPos.Test", "Vadavo.NEscPos.Test\Vadavo.NEscPos.Test.csproj", "{6E51D78A-2F03-43A9-8F51-05D8F8CA8892}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C079FBC0-30BF-4258-8054-166EC356F20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C079FBC0-30BF-4258-8054-166EC356F20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C079FBC0-30BF-4258-8054-166EC356F20A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E51D78A-2F03-43A9-8F51-05D8F8CA8892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E51D78A-2F03-43A9-8F51-05D8F8CA8892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E51D78A-2F03-43A9-8F51-05D8F8CA8892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E51D78A-2F03-43A9-8F51-05D8F8CA8892}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
