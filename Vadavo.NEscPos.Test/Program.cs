@@ -45,14 +45,9 @@ namespace Vadavo.NEscPos.Test
                 Console.WriteLine("1. Connect to printer via USB");
                 Console.WriteLine("2. Connect to printer via serial port");
                 Console.WriteLine("3. Connect to printer via TCP network");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("0. Exit");
-                Console.ResetColor();
+                ConsoleHelpers.WriteErrorLine("0. Exit");
 
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Select option: ");
-                Console.ResetColor();
-                var option = Console.ReadKey();
+                var option = ConsoleHelpers.PromptKey("Select option:");
                 Console.WriteLine();
 
                 IPrinterConnector connector;
@@ -72,7 +67,7 @@ namespace Vadavo.NEscPos.Test
                         Environment.Exit(0);
                         continue;
                     default:
-                        Console.WriteLine("Invalid option, try again.");
+                        ConsoleHelpers.WriteErrorLine("Invalid option, try again.");
                         Console.WriteLine();
                         continue;
                 }
@@ -88,26 +83,16 @@ namespace Vadavo.NEscPos.Test
 
         private static IPrinterConnector _printSerialMenu()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Port name: ");
-            Console.ResetColor();
-            var portName = Console.ReadLine();
+            var portName = ConsoleHelpers.PromptLine("Port name:");
 
             var baudRate = 0;
             var baudRateIsValid = false;
             while (!baudRateIsValid)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Baud rate: ");
-                Console.ResetColor();
-                baudRateIsValid = int.TryParse(Console.ReadLine(), out baudRate);
+                baudRateIsValid = int.TryParse(ConsoleHelpers.PromptLine("Baud rate:"), out baudRate);
 
                 if (!baudRateIsValid)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Baud rate must be an integer number, try again.");
-                    Console.ResetColor();
-                }
+                    ConsoleHelpers.WriteErrorLine("Baud rate must be an integer number, try again.");
             }
 
             return new SerialPortConnector(portName, baudRate);
@@ -119,38 +104,22 @@ namespace Vadavo.NEscPos.Test
             IPAddress ipAddress = null;
             while (!addressIsValid)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("IP Address: ");
-                Console.ResetColor();
-                
-                addressIsValid = IPAddress.TryParse(Console.ReadLine(), out ipAddress);
+                addressIsValid = IPAddress.TryParse(ConsoleHelpers.PromptLine("IP Address:"), out ipAddress);
 
                 if (!addressIsValid)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("IP Address is not valid, try again.");
-                    Console.ResetColor();
-                }
+                    ConsoleHelpers.WriteErrorLine("IP Address is not valid, try again.");
             }
 
             var portIsValid = false;
             int port = 0;
             while (!portIsValid)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("TCP Port (ej 9100): ");
-                Console.ResetColor();
-
-                if (int.TryParse(Console.ReadLine(), out port))
+                if (int.TryParse(ConsoleHelpers.PromptLine("TCP Port (ej 9100):"), out port))
                     if (port >= 0 && port < 65535)
                         portIsValid = true;
 
                 if (!portIsValid)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Port number is not valid, try again.");
-                    Console.ResetColor();
-                }
+                    ConsoleHelpers.WriteErrorLine("Port number is not valid, try again.");
             }
             
             return new NetworkPrinterConnector(ipAddress, port);
