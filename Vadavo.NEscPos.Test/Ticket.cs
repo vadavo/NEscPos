@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Vadavo.NEscPos.Helpers;
 using Vadavo.NEscPos.Printable;
 
 namespace Vadavo.NEscPos.Test
 {
     public class Ticket : IPrintable
     {
-        public string CompanyName { get; set; }
-        public string CompanyDocument { get; set; }
-        public IEnumerable<Product> Products;
+        public string CompanyName { get; }
+        public string CompanyDocument { get; }
+        public IEnumerable<Product> Products { get; }
 
         public Ticket(string companyName, string companyDocument, IEnumerable<Product> products)
         {
@@ -20,43 +21,37 @@ namespace Vadavo.NEscPos.Test
         
         public byte[] GetBytes()
         {
-            var bytes = new List<byte>();
+            var builder = new PrintableBuilder();
 
-            bytes = bytes
-                .Concat(new Justification(JustificationType.Center).GetBytes())
-                .Concat(new TextLine(CompanyName).GetBytes())
-                .Concat(new Justification(JustificationType.Center).GetBytes())
-                .Concat(new Font(FontMode.FontB).GetBytes())
-                .Concat(new TextLine($"Doc. {CompanyDocument}").GetBytes())
-                .Concat(new Feed().GetBytes())
-                .Concat(new Feed().GetBytes())
-                .Concat(new Justification().GetBytes())
-                .ToList();
+            builder
+                .Add(new Justification(JustificationType.Center))
+                .Add(new TextLine(CompanyName))
+                .Add(new Font(FontMode.FontB))
+                .Add(new TextLine($"Doc. {CompanyDocument}"))
+                .Add(new Feed())
+                .Add(new Feed())
+                .Add(new Justification());
 
-            bytes = Products.Aggregate(bytes, (current, product) => current
-                .Concat(new Font().GetBytes())
-                .Concat(new TextLine($"{product.Quantity} x {product.Name}").GetBytes())
-                .Concat(new Font(FontMode.FontB).GetBytes())
-                .Concat(new TextLine($"${product.PricePerUnit.ToString(CultureInfo.InvariantCulture)} x " +
-                                     $"{product.Quantity} = ${product.TotalAmount.ToString(CultureInfo.InvariantCulture)}")
-                    .GetBytes())
-                .Concat(new Feed().GetBytes())
-                .ToList());
+            foreach (var product in Products)
+            {
+                builder
+                    .Add(new Font())
+                    .Add(new TextLine($"{product.Quantity} x {product.Name}"))
+                    .Add(new Font(FontMode.FontB))
+                    .Add(new TextLine($"${product.PricePerUnit.ToString(CultureInfo.InvariantCulture)} x " +
+                                      $"{product.Quantity} = ${product.TotalAmount.ToString(CultureInfo.InvariantCulture)}"))
+                    .Add(new Feed());
+            }
 
-            bytes = bytes.Concat(new Reset().GetBytes())
-                .Concat(new Justification(JustificationType.Right).GetBytes())
-                .Concat(new Font(FontMode.DoubleWidth).GetBytes())
-                .Concat(new TextLine(
-                    $"Total: ${Products.Sum(e => e.TotalAmount).ToString(CultureInfo.InvariantCulture)}").GetBytes())
-                .ToList();
+            builder
+                .Add(new Justification(JustificationType.Right))
+                .Add(new Font(FontMode.DoubleWidth | FontMode.Underline))
+                .Add(new TextLine($"Total: ${Products.Sum(e => e.TotalAmount).ToString(CultureInfo.InvariantCulture)}"))
+                .Add(new Reset())
+                .Add(new Feed())
+                .Add(new Barcode(CompanyName));
 
-            bytes = bytes.Concat(new Reset().GetBytes())
-                .Concat(new Feed().GetBytes())
-                .Concat(new Justification(JustificationType.Center).GetBytes())
-                .Concat(new Barcode(CompanyName).GetBytes())
-                .ToList();
-
-            return bytes.ToArray();
+            return builder.ToArray();
         }
     }
 

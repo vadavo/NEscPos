@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 
 namespace Vadavo.NEscPos.Connectors
@@ -39,10 +40,7 @@ namespace Vadavo.NEscPos.Connectors
 
         public byte[] Read()
         {
-            byte[] buffer = null;
-            _socket.Receive(buffer);
-
-            return buffer;
+            throw new NotImplementedException();
         }
 
         public void Write(byte[] data)

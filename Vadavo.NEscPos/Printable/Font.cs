@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Vadavo.NEscPos.Printable
 {
+    [Flags]
     public enum FontMode
     {
         FontA = 0,
@@ -14,34 +15,36 @@ namespace Vadavo.NEscPos.Printable
 
     public class Font : IPrintable
     {
-        private FontMode[] _mode;
-
-        public Font(params FontMode[] mode)
-        {
-            if (mode == null)
-            {
-                mode = new[] {FontMode.FontA};
-            }
-
-            _mode = mode;
-        }
+        private FontMode _mode;
 
         public Font(FontMode mode = FontMode.FontA)
         {
-            _mode = new[] {mode};
+            _mode = mode;
         }
 
-        public byte[] GetBytes()
+        public byte[] GetBytes() =>
+            new[] { (byte) Control.Escape, (byte) '!', (byte) _mode };
+    }
+
+    public static class FontExtensions
+    {
+        public static void SetFontMode(this IPrinter printer, FontMode fontMode = FontMode.FontA)
         {
-            var bytes = new List<byte>();
-
-            foreach (var mode in _mode)
-            {
-                bytes.AddRange(new[] { (byte) Control.Escape, (byte) '!' });
-                bytes.Add((byte) mode);
-            }
-
-            return bytes.ToArray();
+            if (printer == null)
+                throw new ArgumentNullException(nameof(printer));
+            
+            printer.Print(new Font(fontMode));
         }
+
+        public static void SetFontA(this IPrinter printer) => printer.SetFontMode();
+        public static void SetFontB(this IPrinter printer) => printer.SetFontMode(FontMode.FontB);
+        public static void SetEmphasizedFont(this IPrinter printer) => printer.SetFontMode(FontMode.Emphasized);
+        public static void SetDoubleHeightFont(this IPrinter printer) => printer.SetFontMode(FontMode.DoubleHeight);
+        public static void SetDoubleWidthFont(this IPrinter printer) => printer.SetFontMode(FontMode.DoubleWidth);
+
+        public static void SetDoubleFont(this IPrinter printer) =>
+            printer.SetFontMode(FontMode.DoubleWidth | FontMode.DoubleHeight);
+        
+        public static void SetUnderlineFont(this IPrinter printer) => printer.SetFontMode(FontMode.Underline);
     }
 }

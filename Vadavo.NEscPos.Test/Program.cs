@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Net;
 using Vadavo.NEscPos.Connectors;
+using Vadavo.NEscPos.Printable;
 
 namespace Vadavo.NEscPos.Test
 {
@@ -14,7 +15,7 @@ namespace Vadavo.NEscPos.Test
 
             using (var printer = _printMenu())
             {
-                printer.Print("===Start fake ticket===");
+                printer.PrintLine("===Start fake ticket===");
                 printer.Feed();
                 printer.Feed();
                 
@@ -32,7 +33,7 @@ namespace Vadavo.NEscPos.Test
                 printer.Reset();
                 printer.Feed();
                 printer.Feed();
-                printer.Print("===End fake ticket===");
+                printer.PrintLine("===End fake ticket===");
                 
                 printer.Cut();
             }
