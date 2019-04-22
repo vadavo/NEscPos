@@ -3,6 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Vadavo.NEscPos</RootNamespace>
+    <Title>NEscPos</Title>
+    <Authors>VADAVO SOLUCIONES S.L.</Authors>
+    <Description>ESC/POS .NET Standard library</Description>
+    <Copyright>2018 - VADAVO SOLUCIONES S.L.</Copyright>
+    <PackageProjectUrl>https://github.com/vadavo/NEscPos</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/vadavo/NEscPos</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>ESC/POS, Thermal Printing</PackageTags>
+    <PackageVersion>0.0.2</PackageVersion>
+    <AssemblyVersion>0.0.0.2</AssemblyVersion>
+    <FileVersion>0.0.0.2</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.2</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

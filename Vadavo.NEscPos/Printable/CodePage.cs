@@ -1,4 +1,5 @@
 using System;
+using Vadavo.NEscPos.Helpers;
 
 namespace Vadavo.NEscPos.Printable
 {
@@ -47,6 +48,22 @@ namespace Vadavo.NEscPos.Printable
                 throw new ArgumentNullException(nameof(printer));
             
             printer.Print(new SetCodePage(codePage));
+        }
+
+        public static PrintableBuilder SetCodePage(this PrintableBuilder builder, CodePage codePage)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            return builder.Add(new SetCodePage(codePage));
+        }
+
+        public static PrintableBuilder SetCodePage(this PrintableBuilder builder, byte codePage)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            return builder.Add(new SetCodePage(codePage));
         }
     }
 }

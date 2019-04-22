@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Vadavo.NEscPos.Helpers;
 
 namespace Vadavo.NEscPos.Printable
 {
@@ -37,6 +38,14 @@ namespace Vadavo.NEscPos.Printable
                 throw new ArgumentNullException(nameof(printer));
             
             printer.Print(new Cut(type));
+        }
+
+        public static PrintableBuilder Cut(this PrintableBuilder builder, CutType type = CutType.Partial)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            return builder.Add(new Cut(type));
         }
     }
 }

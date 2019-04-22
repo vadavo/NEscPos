@@ -43,12 +43,20 @@ namespace Vadavo.NEscPos.Printable
         /// <summary>
         ///     Print a line of text using ISO-8859-3 codepage.
         /// </summary>
-        public static void PrintLine(this IPrinter printer, string line = "")
+        public static void PrintLine(this IPrinter printer, string content = "")
         {
             if (printer == null)
                 throw new ArgumentNullException(nameof(printer));
             
-            printer.Print(new TextLine(line));
+            printer.Print(new TextLine(content));
+        }
+
+        public static PrintableBuilder AddTextLine(this PrintableBuilder builder, string content = "")
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            return builder.Add(new TextLine(content));
         }
     }
 }

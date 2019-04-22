@@ -24,32 +24,32 @@ namespace Vadavo.NEscPos.Test
             var builder = new PrintableBuilder();
 
             builder
-                .Add(new SetJustification(JustificationType.Center))
-                .Add(new TextLine(CompanyName))
-                .Add(new SetFont(FontMode.FontB))
-                .Add(new TextLine($"Doc. {CompanyDocument}"))
-                .Add(new Feed())
-                .Add(new Feed())
-                .Add(new SetJustification());
+                .SetCenterJustification()
+                .AddTextLine(CompanyName)
+                .SetFontB()
+                .AddTextLine($"Doc. {CompanyDocument}")
+                .Feed()
+                .Feed()
+                .SetJustification();
 
             foreach (var product in Products)
             {
                 builder
-                    .Add(new SetFont())
-                    .Add(new TextLine($"{product.Quantity} x {product.Name}"))
-                    .Add(new SetFont(FontMode.FontB))
-                    .Add(new TextLine($"${product.PricePerUnit.ToString(CultureInfo.InvariantCulture)} x " +
-                                      $"{product.Quantity} = ${product.TotalAmount.ToString(CultureInfo.InvariantCulture)}"))
-                    .Add(new Feed());
+                    .SetFont()
+                    .AddTextLine($"{product.Quantity} x {product.Name}")
+                    .SetFontB()
+                    .AddTextLine($"${product.PricePerUnit.ToString(CultureInfo.InvariantCulture)} x " +
+                                 $"{product.Quantity} = ${product.TotalAmount.ToString(CultureInfo.InvariantCulture)}")
+                    .Feed();
             }
 
             builder
-                .Add(new SetJustification(JustificationType.Right))
-                .Add(new SetFont(FontMode.DoubleWidth | FontMode.Underline))
-                .Add(new TextLine($"Total: ${Products.Sum(e => e.TotalAmount).ToString(CultureInfo.InvariantCulture)}"))
-                .Add(new Reset())
-                .Add(new Feed())
-                .Add(new Barcode(CompanyName));
+                .SetRightJustification()
+                .SetDoubleFont()
+                .AddTextLine($"Total: ${Products.Sum(e => e.TotalAmount).ToString(CultureInfo.InvariantCulture)}")
+                .Reset()
+                .Feed()
+                .AddBarcode(CompanyName);
 
             return builder.ToArray();
         }

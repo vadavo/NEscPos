@@ -1,4 +1,5 @@
 ﻿using System;
+using Vadavo.NEscPos.Helpers;
 
 namespace Vadavo.NEscPos.Printable
 {
@@ -28,7 +29,7 @@ namespace Vadavo.NEscPos.Printable
 
     public static class FontExtensions
     {
-        public static void SetFontMode(this IPrinter printer, FontMode fontMode = FontMode.FontA)
+        public static void SetFont(this IPrinter printer, FontMode fontMode = FontMode.FontA)
         {
             if (printer == null)
                 throw new ArgumentNullException(nameof(printer));
@@ -36,15 +37,39 @@ namespace Vadavo.NEscPos.Printable
             printer.Print(new SetFont(fontMode));
         }
 
-        public static void SetFontA(this IPrinter printer) => printer.SetFontMode();
-        public static void SetFontB(this IPrinter printer) => printer.SetFontMode(FontMode.FontB);
-        public static void SetEmphasizedFont(this IPrinter printer) => printer.SetFontMode(FontMode.Emphasized);
-        public static void SetDoubleHeightFont(this IPrinter printer) => printer.SetFontMode(FontMode.DoubleHeight);
-        public static void SetDoubleWidthFont(this IPrinter printer) => printer.SetFontMode(FontMode.DoubleWidth);
+        public static void SetFontA(this IPrinter printer) => printer.SetFont();
+        public static void SetFontB(this IPrinter printer) => printer.SetFont(FontMode.FontB);
+        public static void SetEmphasizedFont(this IPrinter printer) => printer.SetFont(FontMode.Emphasized);
+        public static void SetDoubleHeightFont(this IPrinter printer) => printer.SetFont(FontMode.DoubleHeight);
+        public static void SetDoubleWidthFont(this IPrinter printer) => printer.SetFont(FontMode.DoubleWidth);
 
         public static void SetDoubleFont(this IPrinter printer) =>
-            printer.SetFontMode(FontMode.DoubleWidth | FontMode.DoubleHeight);
+            printer.SetFont(FontMode.DoubleWidth | FontMode.DoubleHeight);
         
-        public static void SetUnderlineFont(this IPrinter printer) => printer.SetFontMode(FontMode.Underline);
+        public static void SetUnderlineFont(this IPrinter printer) => printer.SetFont(FontMode.Underline);
+
+        public static PrintableBuilder SetFont(this PrintableBuilder builder, FontMode fontMode = FontMode.FontA)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            return builder.Add(new SetFont(fontMode));
+        }
+
+        public static PrintableBuilder SetFontA(this PrintableBuilder builder) => builder.SetFont();
+
+        public static PrintableBuilder SetFontB(this PrintableBuilder builder) => builder.SetFont(FontMode.FontB);
+
+        public static PrintableBuilder SetEmphasizedFont(this PrintableBuilder builder) =>
+            builder.SetFont(FontMode.Emphasized);
+
+        public static PrintableBuilder SetDoubleHeightFont(this PrintableBuilder builder) =>
+            builder.SetFont(FontMode.DoubleHeight);
+
+        public static PrintableBuilder SetDoubleWidthFont(this PrintableBuilder builder) =>
+            builder.SetFont(FontMode.DoubleWidth);
+
+        public static PrintableBuilder SetDoubleFont(this PrintableBuilder builder) =>
+            builder.SetFont(FontMode.DoubleWidth | FontMode.DoubleHeight);
     }
 }

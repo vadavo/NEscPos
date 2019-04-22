@@ -51,5 +51,14 @@ namespace Vadavo.NEscPos.Printable
             
             printer.Print(new Barcode(content, height, barcodeType));
         }
+
+        public static PrintableBuilder AddBarcode(this PrintableBuilder builder, string content = "", int height = 32,
+            BarcodeType barcodeType = BarcodeType.Code128)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            return builder.Add(new Barcode(content, height, barcodeType));
+        }
     }
 }
