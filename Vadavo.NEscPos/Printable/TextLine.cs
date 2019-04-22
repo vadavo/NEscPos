@@ -10,7 +10,7 @@ namespace Vadavo.NEscPos.Printable
         private readonly string _line;
         private readonly bool _feed;
 
-        public TextLine(string line = "", bool feed = true)
+        public TextLine(string line = "", CodePage codePage = CodePage.Default, bool feed = true)
         {
             _line = line;
             _feed = feed;
@@ -24,19 +24,18 @@ namespace Vadavo.NEscPos.Printable
                 Encoding.Unicode.GetBytes(_line));
             
             builder
-                .Add(IsoCodePage)
+                .Add(new SetCodePage(IsoCodePage))
                 .Add(lineBytes);
 
             if (_feed)
                 builder.Add(new Feed());
 
-            builder.Add(DefaultCodePage);
+            builder.Add(new SetCodePage(CodePage.Default));
 
             return builder.ToArray();
         }
 
-        private byte[] IsoCodePage => new[] {(byte) Control.Escape, (byte) 't', (byte) 37};
-        private byte[] DefaultCodePage => new[] {(byte) Control.Escape, (byte) 't', (byte) 0};
+        private byte IsoCodePage => 37;
     }
 
     public static class TextLineExtensions

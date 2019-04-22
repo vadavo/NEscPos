@@ -7,11 +7,11 @@ namespace Vadavo.NEscPos.Printable
         Left, Center, Right
     }
 
-    public class Justification : IPrintable
+    public class SetJustification : IPrintable
     {
         private JustificationType _type;
 
-        public Justification(JustificationType type = JustificationType.Left)
+        public SetJustification(JustificationType type = JustificationType.Left)
         {
             _type = type;
         }
@@ -26,7 +26,7 @@ namespace Vadavo.NEscPos.Printable
             if (printer == null)
                 throw new ArgumentNullException(nameof(printer));
             
-            printer.Print(new Justification(justificationType));
+            printer.Print(new SetJustification(justificationType));
         }
 
         public static void SetLeftJustification(this IPrinter printer) => printer.SetJustification();

@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System;
+using System.Linq;
 using Vadavo.NEscPos.Helpers;
 
 namespace Vadavo.NEscPos.Printable
@@ -38,6 +38,18 @@ namespace Vadavo.NEscPos.Printable
                 .Add(new[] {(byte) 0, (byte) _content.Length, (byte) 0})
                 .Add(new Reset())
                 .ToArray();
+        }
+    }
+
+    public static class BarcodeExtensions
+    {
+        public static void PrintBarcode(this IPrinter printer, string content, int height = 32,
+            BarcodeType barcodeType = BarcodeType.Code128)
+        {
+            if (printer == null)
+                throw new ArgumentNullException(nameof(printer));
+            
+            printer.Print(new Barcode(content, height, barcodeType));
         }
     }
 }

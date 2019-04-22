@@ -13,11 +13,11 @@ namespace Vadavo.NEscPos.Printable
         Underline = 128,
     }
 
-    public class Font : IPrintable
+    public class SetFont : IPrintable
     {
         private FontMode _mode;
 
-        public Font(FontMode mode = FontMode.FontA)
+        public SetFont(FontMode mode = FontMode.FontA)
         {
             _mode = mode;
         }
@@ -33,7 +33,7 @@ namespace Vadavo.NEscPos.Printable
             if (printer == null)
                 throw new ArgumentNullException(nameof(printer));
             
-            printer.Print(new Font(fontMode));
+            printer.Print(new SetFont(fontMode));
         }
 
         public static void SetFontA(this IPrinter printer) => printer.SetFontMode();

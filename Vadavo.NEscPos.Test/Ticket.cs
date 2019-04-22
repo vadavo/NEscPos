@@ -24,28 +24,28 @@ namespace Vadavo.NEscPos.Test
             var builder = new PrintableBuilder();
 
             builder
-                .Add(new Justification(JustificationType.Center))
+                .Add(new SetJustification(JustificationType.Center))
                 .Add(new TextLine(CompanyName))
-                .Add(new Font(FontMode.FontB))
+                .Add(new SetFont(FontMode.FontB))
                 .Add(new TextLine($"Doc. {CompanyDocument}"))
                 .Add(new Feed())
                 .Add(new Feed())
-                .Add(new Justification());
+                .Add(new SetJustification());
 
             foreach (var product in Products)
             {
                 builder
-                    .Add(new Font())
+                    .Add(new SetFont())
                     .Add(new TextLine($"{product.Quantity} x {product.Name}"))
-                    .Add(new Font(FontMode.FontB))
+                    .Add(new SetFont(FontMode.FontB))
                     .Add(new TextLine($"${product.PricePerUnit.ToString(CultureInfo.InvariantCulture)} x " +
                                       $"{product.Quantity} = ${product.TotalAmount.ToString(CultureInfo.InvariantCulture)}"))
                     .Add(new Feed());
             }
 
             builder
-                .Add(new Justification(JustificationType.Right))
-                .Add(new Font(FontMode.DoubleWidth | FontMode.Underline))
+                .Add(new SetJustification(JustificationType.Right))
+                .Add(new SetFont(FontMode.DoubleWidth | FontMode.Underline))
                 .Add(new TextLine($"Total: ${Products.Sum(e => e.TotalAmount).ToString(CultureInfo.InvariantCulture)}"))
                 .Add(new Reset())
                 .Add(new Feed())
